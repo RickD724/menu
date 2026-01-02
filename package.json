@@ -1,0 +1,17 @@
+{
+  "name": "fi-product-menu",
+  "version": "1.0.0",
+  "description": "F&I Product Menu for Porsche San Francisco",
+  "main": "fi-menu.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "fi-menu",
+    "porsche",
+    "protection-plans"
+  ],
+  "author": "Porsche San Francisco",
+  "license": "PROPRIETARY"
+}

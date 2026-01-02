@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&I Product Menu - Porsche San Francisco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --porsche-black: #000000;
+            --porsche-white: #FFFFFF;
+            --porsche-grey: #333333;
+            --porsche-light-grey: #F5F5F5;
+            --porsche-red: #D5001C;
+            --porsche-gold: #C6A972;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--porsche-light-grey);
+            color: var(--porsche-grey);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--porsche-black);
+            color: var(--porsche-white);
+            padding: 30px 0;
+            margin-bottom: 50px;
+            border-bottom: 3px solid var(--porsche-gold);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--porsche-white);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .mode-btn.active {
+            background: var(--porsche-gold);
+            color: var(--porsche-black);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            background: var(--porsche-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--porsche-black);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .price-input-group {
+            background: var(--porsche-light-grey);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .price-input-group:hover {
+            border-color: var(--porsche-gold);
+        }
+
+        .price-input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--porsche-black);
+            font-size: 14px;
+        }
+
+        .price-input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .price-input-group input:focus {
+            outline: none;
+            border-color: var(--porsche-gold);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--porsche-black);
+            color: var(--porsche-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--porsche-grey);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--porsche-white);
+            color: var(--porsche-black);
+            border: 2px solid var(--porsche-black);
+        }
+
+        .btn-secondary:hover {
+            background: var(--porsche-light-grey);
+        }
+
+        .share-link {
+            background: var(--porsche-light-grey);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid var(--porsche-gold);
+        }
+
+        .share-link p {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .share-link input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: var(--porsche-white);
+        }
+
+        /* Customer View */
+        .customer-view {
+            display: none;
+        }
+
+        .customer-view.active {
+            display: block;
+        }
+
+        .intro-section {
+            background: var(--porsche-white);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--porsche-black);
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            color: var(--porsche-grey);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: var(--porsche-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-card.selected {
+            border-color: var(--porsche-gold);
+            transform: translateY(-4px);
+        }
+
+        .product-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--porsche-black) 0%, var(--porsche-grey) 100%);
+            color: var(--porsche-white);
+            position: relative;
+        }
+
+        .product-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .product-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .product-body {
+            padding: 30px;
+        }
+
+        .coverage-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--porsche-light-grey);
+        }
+
+        .coverage-label {
+            font-weight: 600;
+            color: var(--porsche-black);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .coverage-text {
+            font-size: 14px;
+            color: var(--porsche-grey);
+        }
+
+        .whats-included {
+            margin-bottom: 25px;
+        }
+
+        .whats-included h4 {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--porsche-black);
+            font-size: 15px;
+        }
+
+        .whats-included ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .whats-included li {
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--porsche-grey);
+        }
+
+        .whats-included li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--porsche-gold);
+            font-weight: bold;
+        }
+
+        .pricing-section {
+            background: var(--porsche-light-grey);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--porsche-black);
+            margin-bottom: 5px;
+        }
+
+        .price-monthly {
+            font-size: 1rem;
+            color: var(--porsche-grey);
+            font-weight: 400;
+        }
+
+        .price-total {
+            font-size: 0.9rem;
+            color: var(--porsche-grey);
+        }
+
+        .select-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: var(--porsche-white);
+            border: 2px solid var(--porsche-light-grey);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-checkbox:hover {
+            border-color: var(--porsche-gold);
+            background: var(--porsche-light-grey);
+        }
+
+        .select-checkbox input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--porsche-gold);
+        }
+
+        .select-checkbox label {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            flex: 1;
+        }
+
+        /* Summary Panel */
+        .summary-panel {
+            position: sticky;
+            top: 20px;
+            background: var(--porsche-white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border-top: 4px solid var(--porsche-gold);
+        }
+
+        .summary-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--porsche-black);
+        }
+
+        .selected-items {
+            margin-bottom: 25px;
+        }
+
+        .selected-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--porsche-light-grey);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .selected-item-name {
+            font-weight: 600;
+            color: var(--porsche-black);
+            font-size: 14px;
+        }
+
+        .selected-item-price {
+            font-weight: 600;
+            color: var(--porsche-grey);
+        }
+
+        .summary-totals {
+            border-top: 2px solid var(--porsche-light-grey);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .total-row.grand-total {
+            font-size: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            color: var(--porsche-black);
+            padding-top: 15px;
+            border-top: 2px solid var(--porsche-black);
+        }
+
+        .submit-actions {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .empty-summary {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--porsche-grey);
+        }
+
+        .empty-summary-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        /* Responsive Layout */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--porsche-white);
+            padding: 50px;
+            border-radius: 12px;
+            max-width: 500px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--porsche-gold);
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--porsche-black);
+        }
+
+        .modal-text {
+            margin-bottom: 30px;
+            color: var(--porsche-grey);
+        }
+
+        @media (max-width: 1024px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .product-card {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header, .mode-toggle, .admin-panel, .btn, .select-checkbox {
+                display: none !important;
+            }
+
+            .product-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .summary-panel {
+                position: relative;
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Service & Protection Plans</h1>
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="switchMode('admin')">Admin Mode</button>
+                <button class="mode-btn" onclick="switchMode('customer')">Customer View</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Admin Panel -->
+        <div class="admin-panel active" id="adminPanel">
+            <h2 class="admin-title">Configure Pricing</h2>
+            
+            <div class="pricing-grid">
+                <div class="price-input-group">
+                    <label>Multi-Coverage - Monthly</label>
+                    <input type="number" id="multiCoverageMonthly" value="193.08" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Multi-Coverage - Total</label>
+                    <input type="number" id="multiCoverageTotal" value="5344" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Lease-End Protection - Monthly</label>
+                    <input type="number" id="leaseEndMonthly" value="72.04" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Lease-End Protection - Total</label>
+                    <input type="number" id="leaseEndTotal" value="1994" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Term Coverage Plus - Monthly</label>
+                    <input type="number" id="termCoverageMonthly" value="140.11" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Term Coverage Plus - Total</label>
+                    <input type="number" id="termCoverageTotal" value="3878" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>XPEL Surface Protection - Monthly</label>
+                    <input type="number" id="xpelMonthly" value="90.17" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>XPEL Surface Protection - Total</label>
+                    <input type="number" id="xpelTotal" value="2495" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Surface Protection - Monthly</label>
+                    <input type="number" id="surfaceMonthly" value="72.08" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Surface Protection - Total</label>
+                    <input type="number" id="surfaceTotal" value="1995" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Vehicle Service Protection - Monthly</label>
+                    <input type="number" id="vehicleServiceMonthly" value="354.25" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Vehicle Service Protection - Total</label>
+                    <input type="number" id="vehicleServiceTotal" value="3805" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Dent Protection - Monthly</label>
+                    <input type="number" id="dentMonthly" value="22.75" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Dent Protection - Total</label>
+                    <input type="number" id="dentTotal" value="630" step="1">
+                </div>
+
+                <div class="price-input-group">
+                    <label>Tire & Wheel Protection - Monthly</label>
+                    <input type="number" id="tireWheelMonthly" value="0" step="0.01">
+                </div>
+                <div class="price-input-group">
+                    <label>Tire & Wheel Protection - Total</label>
+                    <input type="number" id="tireWheelTotal" value="0" step="1">
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn btn-primary" onclick="generateCustomerLink()">Generate Customer Link</button>
+                <button class="btn btn-secondary" onclick="printMenu()">Print Menu</button>
+            </div>
+
+            <div class="share-link" id="shareLink" style="display: none;">
+                <p>Share this link with your customer:</p>
+                <input type="text" id="shareLinkInput" readonly onclick="this.select()">
+            </div>
+        </div>
+
+        <!-- Customer View -->
+        <div class="customer-view" id="customerView">
+            <div class="intro-section">
+                <h2>Protect Your Investment</h2>
+                <p>Select the protection and service plans that best suit your needs. Our comprehensive coverage options ensure your Porsche remains in pristine condition for years to come.</p>
+            </div>
+
+            <div class="layout-grid">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be dynamically inserted here -->
+                </div>
+
+                <div class="summary-panel">
+                    <h3 class="summary-title">Your Selection</h3>
+                    <div id="summaryContent">
+                        <div class="empty-summary">
+                            <div class="empty-summary-icon">🛡️</div>
+                            <p>Select products to see your summary</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">✓</div>
+            <h3 class="modal-title">Selection Submitted</h3>
+            <p class="modal-text">Your selections have been shared with your sales representative. They will contact you shortly to finalize your order.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Product data structure
+        const products = [
+            {
+                id: 'multiCoverage',
+                title: 'Porsche Multi-Coverage',
+                subtitle: 'Porsche Financial Services',
+                icon: '📋',
+                coverage: 'Pfs Multi-coverage - Porsche Multi-coverage Platinum Protection Package',
+                deductible: '$0',
+                duration: '3 years',
+                features: [
+                    'Platinum Coverage: Tire & Wheel, Ding & Dent, Windshield, Key Replacement'
+                ]
+            },
+            {
+                id: 'leaseEnd',
+                title: 'Porsche Lease-End Protection',
+                subtitle: 'Porsche Protection Plan',
+                icon: '🔒',
+                coverage: 'Pfs Lease-end Protection - Porsche Proton Plan Lease-end Protection',
+                deductible: '$0',
+                duration: '3 years',
+                features: [
+                    'With the average length of vehicle ownership increasing, Vehicle Service Protection (VSP) can be a smart way to minimize unexpected repair expenses for as long as you own your vehicle',
+                    'With VSP, mechanical repairs including parts and labor stay covered after the manufacturer\'s warranty expires'
+                ]
+            },
+            {
+                id: 'termCoverage',
+                title: 'Porsche Term Coverage Plus',
+                subtitle: 'Porsche Financial Services',
+                icon: '🛡️',
+                coverage: 'Pfs Term Protection Plus - Porsche Term Protection Plus W/rotors',
+                deductible: '$0',
+                duration: '3.5 years / 53K miles',
+                features: [
+                    'The design and performance of your Porsche vehicle is a culmination of in-depth research, on-track results, cutting-edge engineering, and innovative thinking',
+                    'The optional Porsche Protection Plan gives you peace of mind, preserving the appearance of your vehicle and allowing you to simply enjoy the drive',
+                    'The Porsche Protection Plan suite of optional products helps keep your Porsche vehicle looking its best and performing even better'
+                ]
+            },
+            {
+                id: 'xpel',
+                title: 'XPEL Surface Protection',
+                subtitle: '',
+                icon: '⚡',
+                coverage: '',
+                deductible: '',
+                duration: '',
+                features: [
+                    'XPEL Surface protection protects your vehicle\'s good looks and resale value by providing paint and interior surface protection'
+                ]
+            },
+            {
+                id: 'surface',
+                title: 'Surface Protection',
+                subtitle: 'Cilajet Ultimate Protection',
+                icon: '⚡',
+                coverage: '',
+                deductible: '',
+                duration: '',
+                features: [
+                    'Aviation Grade protects vehicle from sun, weather, and abuse',
+                    'Paint sealant protects surfaces from heat, oxidizing, or loss of gloss',
+                    'Interior protection for your vehicle\'s premium leather or vinyl',
+                    'Professional reconditioning, repair, or replacement coverage',
+                    'Helps to keep your vehicle\'s resale value at top dollar'
+                ]
+            },
+            {
+                id: 'vehicleService',
+                title: 'Porsche Vehicle Service Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '🔧',
+                coverage: 'Pfs Vehicle Service Protection - Platinum Vsc - in Warranty',
+                deductible: '$0',
+                duration: '10 years / 100K miles',
+                features: [
+                    'Porsche Vehicle Service Protection delivers benefits beyond the high standards set by the Porsche factory warranty program, with coverage options including',
+                    'Nationwide service available at all participating, authorized Porsche dealers or other authorized licensed repair facilities',
+                    '24-hour roadside assistance with enhanced roadside benefits',
+                    'Reimbursement of up to $250 for towing to a selling dealer or to the nearest authorized licensed repair facility',
+                    'Rental car reimbursement of up to $50 per day for up to 10 days, if covered repairs are performed',
+                    'Trip interruption coverage of up to $200 per day for a maximum of five (5) days, if required for a total benefit of $1000 per occurrence'
+                ]
+            },
+            {
+                id: 'dent',
+                title: 'Porsche Dent Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '☂️',
+                coverage: 'Pfs Dent Ding Protection - Dent Repair',
+                deductible: '',
+                duration: '',
+                features: [
+                    'Parking lot dings, hail dents can greatly reduce the resale or trade-in value of your vehicle',
+                    'Good thing maintaining the value and beauty of your vehicle with Porsche Dent Protection, a convenient way to protect your vehicle from these types of dings and minor dents without repainting',
+                    'Repairs dents and dings that can appear from everyday use',
+                    'Dents and dings must be no larger than four (4) inches in diameter and be within an accessible body panel of your vehicle',
+                    'Removes door dings and minor dents without harming your vehicle\'s factory finish'
+                ]
+            },
+            {
+                id: 'tireWheel',
+                title: 'Porsche Premier Tire & Wheel Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '⚙️',
+                coverage: '',
+                deductible: '',
+                duration: '',
+                features: [
+                    'Tires and wheels are the only parts of your Porsche which touch the road. Unfortunately, they also come into contact with road hazards such as nails, potholes, and debris',
+                    'Our Premier Tire and Wheel Protection will keep you on the road by keeping your tires and wheels in top shape',
+                    'Premier Tire and Wheel Protection will keep you on the road by repairing damaged tires and wheels',
+                    'Replacement of the tire if structurally damaged to a road hazard',
+                    'Replacement of a wheel if road hazard damage prevents the tire from sealing or the tire and maintaining tire manufacturers air pressure specifications',
+                    'Costs associated with the replacement of the tires and/or wheels, plus approved labor charges'
+                ]
+            }
+        ];
+
+        let selectedProducts = new Set();
+        let currentPricing = {};
+
+        // Initialize pricing from inputs
+        function loadPricing() {
+            currentPricing = {
+                multiCoverage: {
+                    monthly: parseFloat(document.getElementById('multiCoverageMonthly').value),
+                    total: parseFloat(document.getElementById('multiCoverageTotal').value)
+                },
+                leaseEnd: {
+                    monthly: parseFloat(document.getElementById('leaseEndMonthly').value),
+                    total: parseFloat(document.getElementById('leaseEndTotal').value)
+                },
+                termCoverage: {
+                    monthly: parseFloat(document.getElementById('termCoverageMonthly').value),
+                    total: parseFloat(document.getElementById('termCoverageTotal').value)
+                },
+                xpel: {
+                    monthly: parseFloat(document.getElementById('xpelMonthly').value),
+                    total: parseFloat(document.getElementById('xpelTotal').value)
+                },
+                surface: {
+                    monthly: parseFloat(document.getElementById('surfaceMonthly').value),
+                    total: parseFloat(document.getElementById('surfaceTotal').value)
+                },
+                vehicleService: {
+                    monthly: parseFloat(document.getElementById('vehicleServiceMonthly').value),
+                    total: parseFloat(document.getElementById('vehicleServiceTotal').value)
+                },
+                dent: {
+                    monthly: parseFloat(document.getElementById('dentMonthly').value),
+                    total: parseFloat(document.getElementById('dentTotal').value)
+                },
+                tireWheel: {
+                    monthly: parseFloat(document.getElementById('tireWheelMonthly').value),
+                    total: parseFloat(document.getElementById('tireWheelTotal').value)
+                }
+            };
+        }
+
+        // Switch between admin and customer mode
+        function switchMode(mode) {
+            const adminPanel = document.getElementById('adminPanel');
+            const customerView = document.getElementById('customerView');
+            const buttons = document.querySelectorAll('.mode-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            if (mode === 'admin') {
+                adminPanel.classList.add('active');
+                customerView.classList.remove('active');
+                buttons[0].classList.add('active');
+            } else {
+                adminPanel.classList.remove('active');
+                customerView.classList.add('active');
+                buttons[1].classList.add('active');
+                loadPricing();
+                renderProducts();
+            }
+        }
+
+        // Render product cards
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => {
+                const pricing = currentPricing[product.id];
+                const isSelected = selectedProducts.has(product.id);
+
+                return `
+                    <div class="product-card ${isSelected ? 'selected' : ''}" id="card-${product.id}">
+                        <div class="product-header">
+                            <div class="product-icon">${product.icon}</div>
+                            <h3 class="product-title">${product.title}</h3>
+                            ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ''}
+                        </div>
+                        <div class="product-body">
+                            ${product.coverage ? `
+                                <div class="coverage-info">
+                                    <div class="coverage-label">Coverage</div>
+                                    <div class="coverage-text">${product.coverage}</div>
+                                </div>
+                            ` : ''}
+                            
+                            ${product.deductible ? `
+                                <div class="coverage-info">
+                                    <div class="coverage-label">Deductible</div>
+                                    <div class="coverage-text">${product.deductible}</div>
+                                </div>
+                            ` : ''}
+
+                            ${product.duration ? `
+                                <div class="coverage-info">
+                                    <div class="coverage-label">Duration</div>
+                                    <div class="coverage-text">${product.duration}</div>
+                                </div>
+                            ` : ''}
+
+                            <div class="whats-included">
+                                <h4>What's Included</h4>
+                                <ul>
+                                    ${product.features.map(f => `<li>${f}</li>`).join('')}
+                                </ul>
+                            </div>
+
+                            <div class="pricing-section">
+                                <div class="price">$${pricing.monthly.toFixed(2)} <span class="price-monthly">/month</span></div>
+                                <div class="price-total">Total price: $${pricing.total.toLocaleString()}</div>
+                            </div>
+
+                            <div class="select-checkbox" onclick="toggleProduct('${product.id}')">
+                                <input type="checkbox" ${isSelected ? 'checked' : ''} id="check-${product.id}" onclick="event.stopPropagation(); toggleProduct('${product.id}')">
+                                <label for="check-${product.id}">Add to Selection</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Toggle product selection
+        function toggleProduct(productId) {
+            if (selectedProducts.has(productId)) {
+                selectedProducts.delete(productId);
+            } else {
+                selectedProducts.add(productId);
+            }
+            updateSummary();
+            
+            // Update card appearance
+            const card = document.getElementById(`card-${productId}`);
+            const checkbox = document.getElementById(`check-${productId}`);
+            
+            if (selectedProducts.has(productId)) {
+                card.classList.add('selected');
+                checkbox.checked = true;
+            } else {
+                card.classList.remove('selected');
+                checkbox.checked = false;
+            }
+        }
+
+        // Update summary panel
+        function updateSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            
+            if (selectedProducts.size === 0) {
+                summaryContent.innerHTML = `
+                    <div class="empty-summary">
+                        <div class="empty-summary-icon">🛡️</div>
+                        <p>Select products to see your summary</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let totalMonthly = 0;
+            let totalPrice = 0;
+            let itemsHtml = '';
+
+            selectedProducts.forEach(productId => {
+                const product = products.find(p => p.id === productId);
+                const pricing = currentPricing[productId];
+                
+                totalMonthly += pricing.monthly;
+                totalPrice += pricing.total;
+
+                itemsHtml += `
+                    <div class="selected-item">
+                        <div class="selected-item-name">${product.title}</div>
+                        <div class="selected-item-price">$${pricing.monthly.toFixed(2)}/mo</div>
+                    </div>
+                `;
+            });
+
+            summaryContent.innerHTML = `
+                <div class="selected-items">
+                    ${itemsHtml}
+                </div>
+                <div class="summary-totals">
+                    <div class="total-row">
+                        <span>Monthly Total:</span>
+                        <span>$${totalMonthly.toFixed(2)}/mo</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Grand Total:</span>
+                        <span>$${totalPrice.toLocaleString()}</span>
+                    </div>
+                </div>
+                <div class="submit-actions">
+                    <button class="btn btn-primary" onclick="submitSelection()">Submit Selection</button>
+                    <button class="btn btn-secondary" onclick="printMenu()">Print Summary</button>
+                </div>
+            `;
+        }
+
+        // Generate customer link with pricing encoded
+        function generateCustomerLink() {
+            loadPricing();
+            const pricingData = btoa(JSON.stringify(currentPricing));
+            const url = `${window.location.origin}${window.location.pathname}?pricing=${pricingData}`;
+            
+            document.getElementById('shareLinkInput').value = url;
+            document.getElementById('shareLink').style.display = 'block';
+        }
+
+        // Load pricing from URL if present
+        function loadPricingFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pricingParam = urlParams.get('pricing');
+            
+            if (pricingParam) {
+                try {
+                    currentPricing = JSON.parse(atob(pricingParam));
+                    switchMode('customer');
+                } catch (e) {
+                    console.error('Failed to load pricing from URL');
+                    loadPricing();
+                }
+            } else {
+                loadPricing();
+            }
+        }
+
+        // Submit selection
+        function submitSelection() {
+            if (selectedProducts.size === 0) {
+                alert('Please select at least one product');
+                return;
+            }
+
+            // In a real application, this would send data to your backend
+            const selectionData = {
+                products: Array.from(selectedProducts),
+                pricing: currentPricing,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Selection submitted:', selectionData);
+            
+            // Show success modal
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // Print menu
+        function printMenu() {
+            window.print();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadPricingFromURL();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "fi-product-menu",
+  "builds": [
+    {
+      "src": "fi-menu.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/fi-menu.html"
+    }
+  ]
+}
