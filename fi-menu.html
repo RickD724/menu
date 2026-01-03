@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&I Product Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Modern Blue Theme */
+            --primary-blue: #0066FF;
+            --deep-blue: #0047AB;
+            --light-blue: #4D94FF;
+            --sky-blue: #E6F0FF;
+            --accent-cyan: #00D9FF;
+            --dark: #0A1128;
+            --dark-blue: #1A2847;
+            --mid-grey: #64748B;
+            --light-grey: #F1F5F9;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 102, 255, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 102, 255, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 102, 255, 0.16);
+            --shadow-xl: 0 12px 48px rgba(0, 102, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0A1128 0%, #1A2847 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--deep-blue) 100%);
+            color: var(--white);
+            padding: 40px 0;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-cyan);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mode-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .mode-btn.active {
+            background: var(--white);
+            color: var(--primary-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Admin Panel */
+        .admin-view {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .admin-view.active {
+            display: block;
+        }
+
+        .admin-header {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .admin-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .admin-subtitle {
+            color: var(--mid-grey);
+            font-size: 1.1rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--deep-blue) 100%);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--sky-blue);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        /* Product Cards Grid in Admin */
+        .admin-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .admin-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .admin-card:hover {
+            border-color: var(--light-blue);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .admin-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light-grey);
+        }
+
+        .admin-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .delete-card-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .delete-card-btn:hover {
+            background: #DC2626;
+            transform: scale(1.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--light-grey);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input[type="number"] {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .icon-input {
+            width: 80px !important;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .add-product-btn {
+            width: 100%;
+            padding: 60px;
+            border: 3px dashed var(--light-blue);
+            background: var(--sky-blue);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .add-product-btn:hover {
+            background: var(--light-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+
+        .add-product-icon {
+            font-size: 3rem;
+        }
+
+        /* Customer View */
+        .customer-view {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .customer-view.active {
+            display: block;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, var(--white) 0%, var(--sky-blue) 100%);
+            padding: 60px 40px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            border: 2px solid var(--light-blue);
+        }
+
+        .intro-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            color: var(--mid-grey);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Layout Grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--light-blue);
+        }
+
+        .product-card.selected {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--white) 0%, var(--sky-blue) 100%);
+            transform: translateY(-4px);
+        }
+
+        .product-header {
+            padding: 35px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--deep-blue) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .product-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-body {
+            padding: 35px;
+        }
+
+        .product-description {
+            font-size: 15px;
+            color: var(--mid-grey);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            min-height: 80px;
+        }
+
+        .pricing-section {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--light-blue) 100%);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 2px solid var(--light-blue);
+        }
+
+        .price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--deep-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .price-label {
+            font-size: 1rem;
+            color: var(--mid-grey);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .select-checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px;
+            background: var(--white);
+            border: 3px solid var(--light-grey);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .select-checkbox:hover {
+            border-color: var(--primary-blue);
+            background: var(--sky-blue);
+            transform: translateY(-2px);
+        }
+
+        .product-card.selected .select-checkbox {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .select-checkbox input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--primary-blue);
+        }
+
+        .select-checkbox label {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            flex: 1;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card.selected .select-checkbox label {
+            color: var(--white);
+        }
+
+        /* Summary Panel */
+        .summary-panel {
+            position: sticky;
+            top: 180px;
+            background: var(--white);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            border: 3px solid var(--primary-blue);
+        }
+
+        .summary-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .selected-items {
+            margin-bottom: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .selected-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px;
+            background: var(--sky-blue);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 2px solid var(--light-blue);
+        }
+
+        .selected-item-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .selected-item-price {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .summary-totals {
+            border-top: 3px solid var(--light-grey);
+            padding-top: 25px;
+            margin-top: 25px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: var(--mid-grey);
+        }
+
+        .total-row.grand-total {
+            font-size: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: var(--dark);
+            padding-top: 20px;
+            border-top: 3px solid var(--primary-blue);
+            margin-top: 15px;
+        }
+
+        .total-row.grand-total .amount {
+            color: var(--primary-blue);
+        }
+
+        .submit-actions {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .empty-summary {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--mid-grey);
+        }
+
+        .empty-summary-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        /* Share Link Section */
+        .share-section {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+        }
+
+        .share-section h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .share-url-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .share-url-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid var(--light-blue);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: monospace;
+            background: var(--sky-blue);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 17, 40, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 60px;
+            border-radius: 24px;
+            max-width: 500px;
+            text-align: center;
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-xl);
+            border: 3px solid var(--primary-blue);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 5rem;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .modal-text {
+            margin-bottom: 30px;
+            color: var(--mid-grey);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .admin-products-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .intro-section h2 {
+                font-size: 2rem;
+            }
+
+            .header-content {
+                padding: 0 20px;
+            }
+
+            .admin-view,
+            .customer-view {
+                padding: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header, .mode-toggle, .admin-view, .btn, .select-checkbox {
+                display: none !important;
+            }
+
+            .product-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🛡️ F&I Product Menu</h1>
+                <div class="mode-toggle">
+                    <button class="mode-btn active" onclick="switchMode('admin')">Admin</button>
+                    <button class="mode-btn" onclick="switchMode('customer')">Customer View</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin View -->
+        <div class="admin-view active" id="adminView">
+            <div class="admin-header">
+                <h2 class="admin-title">Product Management</h2>
+                <p class="admin-subtitle">Add, edit, or remove products. Configure pricing and descriptions.</p>
+                <div class="admin-actions">
+                    <button class="btn btn-primary" onclick="generateCustomerLink()">
+                        🔗 Generate Customer Link
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchMode('customer')">
+                        👁️ Preview Customer View
+                    </button>
+                    <button class="btn btn-secondary" onclick="saveProducts()">
+                        💾 Save Configuration
+                    </button>
+                </div>
+            </div>
+
+            <div class="share-section" id="adminShareSection" style="display: none;">
+                <h3>📤 Share with Customer</h3>
+                <p style="color: var(--mid-grey); margin-bottom: 15px;">
+                    Copy this link and email it to your customer. All pricing and products are encoded in the URL.
+                </p>
+                <div class="share-url-container">
+                    <input type="text" class="share-url-input" id="adminShareUrl" readonly onclick="this.select()">
+                    <button class="btn btn-primary" onclick="copyAdminLink()">📋 Copy</button>
+                </div>
+            </div>
+
+            <div class="admin-products-grid" id="adminProductsGrid">
+                <!-- Admin cards will be inserted here -->
+            </div>
+
+            <div class="add-product-btn" onclick="addNewProduct()">
+                <div class="add-product-icon">+</div>
+                <div>Add New Product</div>
+            </div>
+        </div>
+
+        <!-- Customer View -->
+        <div class="customer-view" id="customerView">
+            <div class="intro-section">
+                <h2>Protect Your Investment</h2>
+                <p>Select the protection and service plans that best suit your needs. Our comprehensive coverage options ensure your vehicle remains in pristine condition for years to come.</p>
+            </div>
+
+            <div class="share-section">
+                <h3>📤 Share Your Selections</h3>
+                <p style="color: var(--mid-grey); margin-bottom: 15px;">
+                    After making your selections, copy the link below and email it to your sales representative.
+                </p>
+                <div class="share-url-container">
+                    <input type="text" class="share-url-input" id="customerShareUrl" readonly onclick="this.select()">
+                    <button class="btn btn-primary" onclick="copyCustomerLink()">📋 Copy Link</button>
+                    <button class="btn btn-success" onclick="emailSelections()">✉️ Email</button>
+                </div>
+            </div>
+
+            <div class="layout-grid">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Product cards will be inserted here -->
+                </div>
+
+                <div class="summary-panel">
+                    <h3 class="summary-title">Your Selection</h3>
+                    <div id="summaryContent">
+                        <div class="empty-summary">
+                            <div class="empty-summary-icon">🛡️</div>
+                            <p>Select products to see your summary</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">✅</div>
+            <h3 class="modal-title">Link Copied!</h3>
+            <p class="modal-text">The link has been copied to your clipboard. You can now paste and share it via email.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Got It</button>
+        </div>
+    </div>
+
+    <script>
+        // Default products
+        let products = [
+            {
+                id: 'multiCoverage',
+                title: 'Porsche Multi-Coverage',
+                subtitle: 'Porsche Financial Services',
+                icon: '📋',
+                description: 'Platinum Coverage: Tire & Wheel, Ding & Dent, Windshield, Key Replacement. Comprehensive protection for your vehicle.',
+                price: 5344
+            },
+            {
+                id: 'leaseEnd',
+                title: 'Porsche Lease-End Protection',
+                subtitle: 'Porsche Protection Plan',
+                icon: '🔒',
+                description: 'With the average length of vehicle ownership increasing, Vehicle Service Protection (VSP) can be a smart way to minimize unexpected repair expenses for as long as you own your vehicle.',
+                price: 1994
+            },
+            {
+                id: 'termCoverage',
+                title: 'Porsche Term Coverage Plus',
+                subtitle: 'Porsche Financial Services',
+                icon: '🛡️',
+                description: 'The optional Porsche Protection Plan gives you peace of mind, preserving the appearance of your vehicle and allowing you to simply enjoy the drive.',
+                price: 3878
+            },
+            {
+                id: 'xpel',
+                title: 'XPEL Surface Protection',
+                subtitle: 'Ultimate Paint Protection',
+                icon: '⚡',
+                description: 'XPEL Surface protection protects your vehicle\'s good looks and resale value by providing paint and interior surface protection.',
+                price: 2495
+            },
+            {
+                id: 'surface',
+                title: 'Surface Protection',
+                subtitle: 'Cilajet Ultimate Protection',
+                icon: '✨',
+                description: 'Aviation Grade protects vehicle from sun, weather, and abuse. Paint sealant protects surfaces from heat, oxidizing, or loss of gloss.',
+                price: 1995
+            },
+            {
+                id: 'vehicleService',
+                title: 'Vehicle Service Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '🔧',
+                description: 'Nationwide service available at all participating, authorized dealers. 24-hour roadside assistance with enhanced roadside benefits.',
+                price: 3805
+            },
+            {
+                id: 'dent',
+                title: 'Porsche Dent Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '☂️',
+                description: 'Repairs dents and dings that can appear from everyday use. Removes door dings and minor dents without harming your vehicle\'s factory finish.',
+                price: 630
+            },
+            {
+                id: 'tireWheel',
+                title: 'Premier Tire & Wheel Protection',
+                subtitle: 'Porsche Financial Services',
+                icon: '⚙️',
+                description: 'Our Premier Tire and Wheel Protection will keep you on the road by repairing damaged tires and wheels from road hazards.',
+                price: 1850
+            }
+        ];
+
+        let selectedProducts = new Set();
+        let currentMode = 'admin';
+
+        // Load products from URL or localStorage
+        function loadProducts() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productsParam = urlParams.get('products');
+            const selectionsParam = urlParams.get('selections');
+
+            if (productsParam) {
+                try {
+                    products = JSON.parse(atob(productsParam));
+                } catch (e) {
+                    console.error('Failed to load products from URL');
+                }
+            } else {
+                // Try to load from localStorage
+                const saved = localStorage.getItem('fi_products');
+                if (saved) {
+                    try {
+                        products = JSON.parse(saved);
+                    } catch (e) {
+                        console.error('Failed to load from localStorage');
+                    }
+                }
+            }
+
+            if (selectionsParam) {
+                try {
+                    const selections = JSON.parse(atob(selectionsParam));
+                    selectedProducts = new Set(selections);
+                    switchMode('customer');
+                } catch (e) {
+                    console.error('Failed to load selections from URL');
+                }
+            }
+        }
+
+        // Save products to localStorage
+        function saveProducts() {
+            localStorage.setItem('fi_products', JSON.stringify(products));
+            alert('✅ Configuration saved successfully!');
+        }
+
+        // Switch between admin and customer mode
+        function switchMode(mode) {
+            currentMode = mode;
+            const adminView = document.getElementById('adminView');
+            const customerView = document.getElementById('customerView');
+            const buttons = document.querySelectorAll('.mode-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            if (mode === 'admin') {
+                adminView.classList.add('active');
+                customerView.classList.remove('active');
+                buttons[0].classList.add('active');
+                renderAdminProducts();
+            } else {
+                adminView.classList.remove('active');
+                customerView.classList.add('active');
+                buttons[1].classList.add('active');
+                renderCustomerProducts();
+                updateCustomerUrl();
+            }
+        }
+
+        // Render admin product cards
+        function renderAdminProducts() {
+            const grid = document.getElementById('adminProductsGrid');
+            grid.innerHTML = products.map((product, index) => `
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <div>
+                            <h3 class="admin-card-title">${product.title}</h3>
+                        </div>
+                        <button class="delete-card-btn" onclick="deleteProduct(${index})" title="Delete Product">
+                            ×
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Icon (Emoji)</label>
+                        <input type="text" class="icon-input" value="${product.icon}" 
+                               onchange="updateProduct(${index}, 'icon', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Title</label>
+                        <input type="text" value="${product.title}" 
+                               onchange="updateProduct(${index}, 'title', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subtitle</label>
+                        <input type="text" value="${product.subtitle}" 
+                               onchange="updateProduct(${index}, 'subtitle', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea onchange="updateProduct(${index}, 'description', this.value)">${product.description}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <input type="number" value="${product.price}" step="1" 
+                               onchange="updateProduct(${index}, 'price', parseFloat(this.value))">
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update product property
+        function updateProduct(index, field, value) {
+            products[index][field] = value;
+            if (currentMode === 'customer') {
+                renderCustomerProducts();
+                updateSummary();
+            }
+        }
+
+        // Delete product
+        function deleteProduct(index) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                const productId = products[index].id;
+                products.splice(index, 1);
+                selectedProducts.delete(productId);
+                renderAdminProducts();
+            }
+        }
+
+        // Add new product
+        function addNewProduct() {
+            const newProduct = {
+                id: 'product_' + Date.now(),
+                title: 'New Product',
+                subtitle: 'Category',
+                icon: '🆕',
+                description: 'Enter product description here...',
+                price: 0
+            };
+            products.push(newProduct);
+            renderAdminProducts();
+        }
+
+        // Render customer product cards
+        function renderCustomerProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => {
+                const isSelected = selectedProducts.has(product.id);
+
+                return `
+                    <div class="product-card ${isSelected ? 'selected' : ''}" id="card-${product.id}">
+                        <div class="product-header">
+                            <div class="product-icon">${product.icon}</div>
+                            <h3 class="product-title">${product.title}</h3>
+                            ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ''}
+                        </div>
+                        <div class="product-body">
+                            <div class="product-description">${product.description}</div>
+
+                            <div class="pricing-section">
+                                <div class="price">$${product.price.toLocaleString()}</div>
+                                <div class="price-label">Total Price</div>
+                            </div>
+
+                            <div class="select-checkbox" onclick="toggleProduct('${product.id}')">
+                                <input type="checkbox" ${isSelected ? 'checked' : ''} id="check-${product.id}" 
+                                       onclick="event.stopPropagation(); toggleProduct('${product.id}')">
+                                <label for="check-${product.id}">
+                                    ${isSelected ? 'Selected ✓' : 'Add to Selection'}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Toggle product selection
+        function toggleProduct(productId) {
+            if (selectedProducts.has(productId)) {
+                selectedProducts.delete(productId);
+            } else {
+                selectedProducts.add(productId);
+            }
+            updateSummary();
+            updateCustomerUrl();
+            
+            const card = document.getElementById(`card-${productId}`);
+            const checkbox = document.getElementById(`check-${productId}`);
+            
+            if (selectedProducts.has(productId)) {
+                card.classList.add('selected');
+                checkbox.checked = true;
+                checkbox.nextElementSibling.textContent = 'Selected ✓';
+            } else {
+                card.classList.remove('selected');
+                checkbox.checked = false;
+                checkbox.nextElementSibling.textContent = 'Add to Selection';
+            }
+        }
+
+        // Update summary panel
+        function updateSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            
+            if (selectedProducts.size === 0) {
+                summaryContent.innerHTML = `
+                    <div class="empty-summary">
+                        <div class="empty-summary-icon">🛡️</div>
+                        <p>Select products to see your summary</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let totalPrice = 0;
+            let itemsHtml = '';
+
+            selectedProducts.forEach(productId => {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                totalPrice += product.price;
+
+                itemsHtml += `
+                    <div class="selected-item">
+                        <div class="selected-item-name">${product.icon} ${product.title}</div>
+                        <div class="selected-item-price">$${product.price.toLocaleString()}</div>
+                    </div>
+                `;
+            });
+
+            summaryContent.innerHTML = `
+                <div class="selected-items">
+                    ${itemsHtml}
+                </div>
+                <div class="summary-totals">
+                    <div class="total-row">
+                        <span>Items Selected:</span>
+                        <span>${selectedProducts.size}</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Total:</span>
+                        <span class="amount">$${totalPrice.toLocaleString()}</span>
+                    </div>
+                </div>
+                <div class="submit-actions">
+                    <button class="btn btn-primary" onclick="copyCustomerLink()">
+                        📋 Copy Link to Share
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.print()">
+                        🖨️ Print Summary
+                    </button>
+                </div>
+            `;
+        }
+
+        // Generate customer link with products and selections encoded
+        function generateCustomerLink() {
+            const productsData = btoa(JSON.stringify(products));
+            const url = `${window.location.origin}${window.location.pathname}?products=${productsData}`;
+            
+            document.getElementById('adminShareUrl').value = url;
+            document.getElementById('adminShareSection').style.display = 'block';
+        }
+
+        // Update customer URL with current selections
+        function updateCustomerUrl() {
+            const productsData = btoa(JSON.stringify(products));
+            const selectionsData = btoa(JSON.stringify(Array.from(selectedProducts)));
+            const url = `${window.location.origin}${window.location.pathname}?products=${productsData}&selections=${selectionsData}`;
+            
+            document.getElementById('customerShareUrl').value = url;
+        }
+
+        // Copy admin link
+        function copyAdminLink() {
+            const input = document.getElementById('adminShareUrl');
+            input.select();
+            document.execCommand('copy');
+            showModal('🔗 Link Copied!', 'The customer link has been copied to your clipboard.');
+        }
+
+        // Copy customer link
+        function copyCustomerLink() {
+            const input = document.getElementById('customerShareUrl');
+            input.select();
+            document.execCommand('copy');
+            showModal('📋 Link Copied!', 'Your selections have been copied. Paste this link in an email to your sales representative.');
+        }
+
+        // Email selections
+        function emailSelections() {
+            const url = document.getElementById('customerShareUrl').value;
+            const subject = encodeURIComponent('My F&I Product Selections');
+            const body = encodeURIComponent(`Here are my product selections:\n\n${url}\n\nPlease review and contact me to finalize.`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        // Show modal
+        function showModal(title, text) {
+            document.querySelector('.modal-title').textContent = title;
+            document.querySelector('.modal-text').textContent = text;
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadProducts();
+            
+            // Check if URL has selections - if so, show customer view
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('selections')) {
+                switchMode('customer');
+            } else {
+                switchMode('admin');
+            }
+        };
+    </script>
+</body>
+</html>
